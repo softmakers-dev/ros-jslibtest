@@ -11,8 +11,9 @@ function SendMessage() {
     function connect() {
 
         if (status !== 'Connected!') {
-            // ros.connect("ws://192.168.0.22:9090")  // bridged network
-            ros.connect("ws://192.168.64.2:9090")  // shared network
+            ros.connect("ws://192.168.0.22:9090")  // [ROS2] bridged network
+            // ros.connect("ws://192.168.64.2:9090")  // [ROS2] shared network
+            // ros.connect("ws://192.168.0.27:9091")  // [ROS1] bridged network
             // won't let the user connect more than once
             ros.on('error', function (error) {
                 console.log(error)
@@ -60,6 +61,12 @@ function SendMessage() {
             name : '/robot_news',
             messageType : 'example_interfaces/String'
         });
+
+        // const listener = new ROSLIB.Topic({
+        //     ros : ros,
+        //     name : '/robot_news_radio',
+        //     messageType : 'std_msgs/String'
+        // });
 
         listener.subscribe(function(message) {
             console.log('Received message on ' + listener.name + ': ' + message.data);
